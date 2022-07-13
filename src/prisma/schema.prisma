@@ -15,14 +15,14 @@ model users {
   email     String @unique
   password  String
   createdAt DateTime @default(now())
-  // Sessions  Sessions[]
+  Sessions  sessions[]
 }
 
-// model sessions {
-//   id        Int @id @default(autoincrement())
-//   token     String
-//   userId    Int
-//   isValid   Boolean @default(true)
-//   createAt  DateTime @default(now())
-//   User      Users @relation(fields: [userId], references: [id])
-// }
+model sessions {
+  id        Int @id @default(autoincrement())
+  token     String
+  userId    Int
+  isValid   Boolean @default(true)
+  createdAt  DateTime @default(now())
+  User      users @relation(fields: [userId], references: [id])
+}
