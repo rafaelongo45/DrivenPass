@@ -19,7 +19,7 @@ async function checkCredential(credential: Credentials, userId: number){
   const isCredentialFromUser = credential.userId === userId;
 
   if(!isCredentialFromUser){
-    throw { type: "credentialError", message: "This credential does not belong to this user", code: 403 };
+    throw { type: "credentialError", message: "This credential does not belong to this user", code: 401 };
   }
 }
 

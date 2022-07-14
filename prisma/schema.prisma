@@ -17,12 +17,13 @@ model Users {
   createdAt   DateTime @default(now())
   sessions    Sessions[]
   credentials Credentials[] 
+  notes       Notes[]
 }
 
 model Sessions {
   id          Int @id @default(autoincrement())
-  token       String
   userId      Int
+  token       String
   isValid     Boolean @default(true)
   createdAt   DateTime @default(now())
   user        Users @relation(fields: [userId], references: [id])
@@ -36,6 +37,16 @@ model Credentials {
   username    String
   password    String
   createdAt   DateTime @default(now())
+  user        Users @relation(fields: [userId], references: [id])
+
+  @@unique([userId, title])
+}
+
+model Notes {
+  id          Int @id @default(autoincrement())
+  userId      Int
+  title       String
+  message     String
   user        Users @relation(fields: [userId], references: [id])
 
   @@unique([userId, title])
