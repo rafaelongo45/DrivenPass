@@ -44,4 +44,10 @@ export async function findUserCard(userId: number, cardId: number){
   await checkCard(card, userId);
   const decryptedCard = decryptPassword(card);
   return decryptedCard;
+};
+
+export async function deleteCard(userId: number, cardId: number){
+  const card = await cardRepository.findSpecificCard(cardId);
+  await checkCard(card, userId);
+  await cardRepository.deleteCardById(cardId);
 }

@@ -1,7 +1,7 @@
 import { Cards } from "@prisma/client";
 import { Request, Response } from "express";
 
-import { findAllCards, findUserCard, insertCard } from "../Services/cardsService.js";
+import { deleteCard, findAllCards, findUserCard, insertCard } from "../Services/cardsService.js";
 
 export async function createCard(req: Request, res: Response){
   const { userId } = res.locals;
@@ -21,4 +21,11 @@ export async function getCard(req: Request, res: Response){
   const { userId } = res.locals;
   const card = await findUserCard(userId, parseInt(id));
   return res.status(200).send(card);
+};
+
+export async function deleteUserCard(req: Request, res: Response){
+  const { id } = req.params;
+  const { userId } = res.locals;
+  await deleteCard(userId, parseInt(id));
+  return res.sendStatus(200);
 }

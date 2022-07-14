@@ -26,5 +26,13 @@ export async function findSpecificCard(id: number){
   });
 
   return card;
-}
+};
+
+export async function deleteCardById(id: number){
+  await prisma.cards.delete({
+    where:{
+      id
+    }
+  });
+};
 
