@@ -12,5 +12,5 @@ export function decryptAllPasswords(credentials: Credentials[]){
   const decryptedCredentials = credentials.map((credential: Credentials) => {
    return decryptPassword(credential)
   });
-  return decryptedCredentials
+  return decryptedCredentials;
 }

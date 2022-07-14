@@ -11,43 +11,58 @@ datasource db {
 }
 
 model Users {
-  id          Int @id @default(autoincrement())
-  email       String @unique
-  password    String
-  createdAt   DateTime @default(now())
-  sessions    Sessions[]
-  credentials Credentials[] 
-  notes       Notes[]
+  id            Int @id @default(autoincrement())
+  email         String @unique
+  password      String
+  createdAt     DateTime @default(now())
+  sessions      Sessions[]
+  credentials   Credentials[] 
+  notes         Notes[]
+  cards         Cards[]
 }
 
 model Sessions {
-  id          Int @id @default(autoincrement())
-  userId      Int
-  token       String
-  isValid     Boolean @default(true)
-  createdAt   DateTime @default(now())
-  user        Users @relation(fields: [userId], references: [id])
+  id            Int @id @default(autoincrement())
+  userId        Int
+  token         String
+  isValid       Boolean @default(true)
+  createdAt     DateTime @default(now())
+  user          Users @relation(fields: [userId], references: [id])
 }
 
 model Credentials {
-  id          Int @id @default(autoincrement())
-  userId      Int
-  title       String
-  url         String 
-  username    String
-  password    String
-  createdAt   DateTime @default(now())
-  user        Users @relation(fields: [userId], references: [id])
+  id            Int @id @default(autoincrement())
+  userId        Int
+  title         String
+  url           String 
+  username      String
+  password      String
+  createdAt     DateTime @default(now())
+  user          Users @relation(fields: [userId], references: [id])
 
   @@unique([userId, title])
 }
 
 model Notes {
-  id          Int @id @default(autoincrement())
-  userId      Int
-  title       String
-  message     String
-  user        Users @relation(fields: [userId], references: [id])
+  id            Int @id @default(autoincrement())
+  userId        Int
+  title         String
+  message       String
+  user          Users @relation(fields: [userId], references: [id])
 
   @@unique([userId, title])
+}
+
+model Cards {
+  id            Int @id @default(autoincrement())
+  userId        Int
+  number        String
+  name          String
+  password      String
+  securityCode  String
+  expiration    String
+  isVirtual     Boolean @default(false)
+  title         String
+  type          String
+  user          Users @relation(fields: [userId], references: [id])
 }
