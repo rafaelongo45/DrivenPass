@@ -7,6 +7,10 @@ import { decryptAllPasswords, decryptPassword } from "../utils/credentialsUtil.j
 
 dotenv.config();
 
+async function deleteCredentialById(id: number){
+  await credentialsRepository.deleteById(id);
+}
+
 async function checkCredential(credential: Credentials, userId: number){
   if(!credential){
     throw { type: "credentialError", message: "Credential with this id does not exist", code: 404 };
@@ -57,4 +61,10 @@ export async function getSpecificCredential(credentialId: number, userId: number
   await checkCredential(credential, userId);
   const decryptedCredential = decryptPassword(credential);
   return decryptedCredential;
+};
+
+export async function deleteCredential(credentialId: number, userId: number){
+  const credential = await credentialsRepository.getCredentialById(credentialId);
+  await checkCredential(credential, userId);
+  await deleteCredentialById(credentialId);
 }

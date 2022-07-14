@@ -44,4 +44,12 @@ export async function getCredentialById(id: number){
   });
 
   return credential;
-}
+};
+
+export async function deleteById(id: number){
+  await prisma.credentials.delete({
+    where:{
+      id
+    }
+  });
+};

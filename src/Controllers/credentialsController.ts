@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Credentials } from "@prisma/client";
 
-import { create, getAllUserCredentials, getSpecificCredential } from "../Services/credentialsService.js";
+import { create, deleteCredential, getAllUserCredentials, getSpecificCredential } from "../Services/credentialsService.js";
 
 export async function createCredential(req: Request, res: Response){
   const { userId } = res.locals; //TODO: Como tipar o res.locals?
@@ -21,4 +21,11 @@ export async function findSpecificCredential(req: Request, res: Response){
   const { userId } = res.locals;
   const credential = await getSpecificCredential(parseInt(id), userId);
   return res.status(200).send(credential);
+};
+
+export async function deleteUserCredential(req: Request, res: Response){
+  const { id } = req.params;
+  const { userId } = res.locals;
+  await deleteCredential(parseInt(id), userId);
+  return res.sendStatus(202);
 }
