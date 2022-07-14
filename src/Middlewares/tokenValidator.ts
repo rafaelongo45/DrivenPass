@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { findSessionByToken, Session } from "../Repositories/authRepository.js";
+
+import { findSessionByToken } from "../Repositories/authRepository.js";
 
 async function getSessionByToken(token: string){
-  const [session] = await findSessionByToken(token);
+  const session = await findSessionByToken(token);
 
   if(!session){
     throw { type: "notFound", message: "There isn't a session created with this token", code: 404 }

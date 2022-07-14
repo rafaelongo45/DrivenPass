@@ -1,11 +1,12 @@
+import { Users } from "@prisma/client";
+
 import * as authRepository from "../Repositories/authRepository.js";
 import { decryptPassword, encryptPassword, generateToken } from "../utils/authUtil.js";
 
 async function userExists(email: string){
   const user = await authRepository.findByEmail(email);
-  const hasUser = user.length !== 0 
 
-  if(hasUser){
+  if(user){
     throw { type: "authError", message: "E-mail already registered", code: 409 };
   }
 };
@@ -15,7 +16,7 @@ async function insertUser(email: string, password: string){
 };
 
 async function getUser(email: string, password: string){
-  const [user] = await authRepository.findByEmail(email);
+  const user = await authRepository.findByEmail(email);
 
   if(!user){
     throw { type: "authError", message: "E-mail not registered", code: 404 };
@@ -30,14 +31,14 @@ async function getUser(email: string, password: string){
   return user;
 };
 
-export async function create(body: authRepository.User){
+export async function create(body: Users){
   const { email, password } = body;
   await userExists(email);
   const encryptedPassword = encryptPassword(password);
   await insertUser(email, encryptedPassword);
 };
 
-export async function signin(body: authRepository.User){
+export async function signin(body: Users){
   const { email, password } = body;
   const user = await getUser(email, password);
   const token = generateToken(body);

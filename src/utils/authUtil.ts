@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
-import { User } from "../Repositories/authRepository";
+import { Users } from "@prisma/client";
 
 dotenv.config();
 
@@ -17,7 +17,7 @@ export async function decryptPassword(password: string, userPassword: string){
   return isPasswordCorrect
 };
 
-export function generateToken(user: User){
+export function generateToken(user: Users){
   const token = jwt.sign(user, process.env.JWT_KEY);
   return token;
 }
