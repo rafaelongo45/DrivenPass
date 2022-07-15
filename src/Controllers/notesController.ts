@@ -12,7 +12,7 @@ export async function createNote(req: Request, res: Response){
 
 export async function getAllNotes(req: Request, res: Response){
   const { userId } = res.locals;
-  const notes = await notesService.getllNotes(userId);
+  const notes = await notesService.getAllNotes(userId);
   return res.status(200).send(notes);
 };
 

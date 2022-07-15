@@ -27,7 +27,7 @@ export async function insertNote(data: Notes){
   await create(data);
 };
 
-export async function getllNotes(userId: number){
+export async function getAllNotes(userId: number){
   const notes = await findAllNotes(userId);
   return notes;
 }

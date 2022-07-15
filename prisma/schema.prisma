@@ -20,6 +20,7 @@ model Users {
   notes         Notes[]
   cards         Cards[]
   wifi          Wifi[]
+  documents     Documents[]
 }
 
 model Sessions {
@@ -49,6 +50,7 @@ model Notes {
   userId        Int
   title         String
   message       String
+  createdAt     DateTime @default(now())
   user          Users @relation(fields: [userId], references: [id])
 
   @@unique([userId, title])
@@ -65,6 +67,7 @@ model Cards {
   isVirtual     Boolean @default(false)
   title         String
   type          String
+  createdAt     DateTime @default(now())
   user          Users @relation(fields: [userId], references: [id])
 
   @@unique([userId, title])
@@ -76,5 +79,21 @@ model Wifi {
   name          String
   password      String
   title         String
+  createdAt     DateTime @default(now())
   user          Users @relation(fields: [userId], references: [id])
+}
+
+model Documents {
+  id            Int @id @default(autoincrement())
+  userId        Int
+  name          String
+  issuedAt      String
+  number        String
+  expiration    String
+  issuedBy      String
+  type          String
+  createdAt     DateTime @default(now())
+  user          Users @relation(fields: [userId], references: [id])
+
+  @@unique([userId, type])
 }
