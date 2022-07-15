@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { Wifi } from "@prisma/client";
 
 import { deleteWifiById, findAllWifi, findById, insert } from "../Repositories/wifiRepository.js";
+import { decryptAllPasswords, decryptPassword } from "../utils/wifiUtil.js";
 
 dotenv.config();
 
@@ -32,14 +33,16 @@ export async function insertWifi(body: Wifi){
 };
 
 export async function getAllWifi(userId: number){
-  const notes = await findAllWifi(userId);
-  return notes;
+  const wifis = await findAllWifi(userId);
+  const decryptedWifis = decryptAllPasswords(wifis);
+  return decryptedWifis;
 }
 
 export async function getSpecificWifi(wifiId: number, userId: number){
   const wifi = await findById(wifiId);
   await checkWifi(wifi, userId);
-  return wifi;
+  const decyptedWifi = decryptPassword(wifi);
+  return decyptedWifi;
 }
 
 export async function deleteWifi(wifiId: number, userId: number){

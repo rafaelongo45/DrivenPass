@@ -16,7 +16,7 @@ export async function findAllCredentials(req: Request, res: Response){
   return res.status(200).send(userCredentials);
 };
 
-export async function findSpecificCredential(req: Request, res: Response){
+export async function findCredential(req: Request, res: Response){
   const { id } = req.params;  //TODO: Recebendo como string. Como tipar essa brincadeira aí??
   const { userId } = res.locals;
   const credential = await getSpecificCredential(parseInt(id), userId);

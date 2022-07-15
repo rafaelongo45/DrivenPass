@@ -7,6 +7,14 @@ import { decryptAllPasswords, decryptPassword } from "../utils/cardsUtil.js";
 
 dotenv.config();
 
+async function findByUserIdAndTitle(userId: number, title: string){
+  const card = await cardRepository.findByTitleAndId(userId, title);
+
+  if(card){
+    throw { type: "credentialError", message: "Card with this title for this user already exists", code: 409 };
+  }
+};
+
 async function checkCard(card: Cards, userId: number){
   if(!card){
     throw { type: "cardError", message: "Card with this id does not exist", code: 404 };
@@ -17,7 +25,7 @@ async function checkCard(card: Cards, userId: number){
   if(!isCardFromUser){
     throw { type: "cardError", message: "This card does not belong to this user", code: 401 };
   }
-}
+};
 
 async function encryptData(data: Cards){
   const cryptr = new Cryptr(process.env.CRYPTR_KEY);
@@ -28,8 +36,8 @@ async function encryptData(data: Cards){
 };
 
 export async function insertCard(data: Cards){
+  await findByUserIdAndTitle(data.userId, data.title);
   const encryptedData = await encryptData(data);
-
   await cardRepository.insert(encryptedData);
 };
 

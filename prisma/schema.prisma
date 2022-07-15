@@ -66,6 +66,8 @@ model Cards {
   title         String
   type          String
   user          Users @relation(fields: [userId], references: [id])
+
+  @@unique([userId, title])
 }
 
 model Wifi {

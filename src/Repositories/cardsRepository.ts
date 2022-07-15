@@ -16,6 +16,17 @@ export async function findAllUserCards(userId: number){
   });
 
   return cards;
+};
+
+export async function findByTitleAndId(userId: number, title: string){
+  const card = await prisma.cards.findFirst({
+    where:{
+      userId,
+      title
+    }
+  })
+  
+  return card;
 }
 
 export async function findSpecificCard(id: number){
