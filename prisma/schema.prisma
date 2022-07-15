@@ -19,6 +19,7 @@ model Users {
   credentials   Credentials[] 
   notes         Notes[]
   cards         Cards[]
+  wifi          Wifi[]
 }
 
 model Sessions {
@@ -59,10 +60,19 @@ model Cards {
   number        String
   name          String
   password      String
-  securityCode  String
+  securityCode  Int
   expiration    String
   isVirtual     Boolean @default(false)
   title         String
   type          String
+  user          Users @relation(fields: [userId], references: [id])
+}
+
+model Wifi {
+  id            Int @id @default(autoincrement())
+  userId        Int
+  name          String
+  password      String
+  title         String
   user          Users @relation(fields: [userId], references: [id])
 }
