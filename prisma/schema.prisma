@@ -62,7 +62,7 @@ model Cards {
   number        String
   name          String
   password      String
-  securityCode  Int
+  securityCode  String
   expiration    String
   isVirtual     Boolean @default(false)
   title         String

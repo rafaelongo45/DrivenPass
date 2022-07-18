@@ -30,8 +30,9 @@ async function checkCard(card: Cards, userId: number){
 async function encryptData(data: Cards){
   const cryptr = new Cryptr(process.env.CRYPTR_KEY);
   const encryptedPassword: string = cryptr.encrypt(data.password);
+  const encryptedCVC: string = cryptr.encrypt(data.securityCode);
 
-  const encryptedData = { ...data, password: encryptedPassword};
+  const encryptedData = { ...data, password: encryptedPassword, securityCode: encryptedCVC};
   return encryptedData;
 };
 
