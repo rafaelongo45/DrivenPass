@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Cards" ALTER COLUMN "securityCode" SET DATA TYPE TEXT,
-ALTER COLUMN "password" SET DATA TYPE TEXT;
